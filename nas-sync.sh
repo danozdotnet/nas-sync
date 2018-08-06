@@ -1,5 +1,5 @@
 #!/bin/bash
-# NAS Sync - v0.8
+# NAS Sync - v0.8.1
 
 # Sync the latest version of a NAS Share to a union mounted directory, only downloading
 # and keeping the newer/changed files, so that transfer times and used space is decreased
@@ -17,10 +17,21 @@
 # to export over NFS and the like using the OverlayFS mounted filesystems. Or you can 
 # just disable SELinux.
 
+# user adjustable variables:
+#-----------------------------
+
+# local pool root directory
+POOL="/mnt/pool/NAS"
+# Remote NAS share info (rsync structure)
+NAS="/NAS/Data/"
+
 # Rsync server details, specify username/password if required
 RSYNC_SERVER="192.168.155.180"
 RSYNC_USER=""
 RSYNC_PASSWORD=""
+
+# don't change anything below this line, unless you really have to ;)
+#-----------------------------
 
 # if we specify a user, update server details to include username
 if [[ "${RSYNC_USER}" != "" ]]; then
@@ -30,10 +41,6 @@ if [[ "${RSYNC_USER}" != "" ]]; then
   export RSYNC_PASSWORD
 fi
 
-# local pool root directory
-POOL="/mnt/pool/NAS"
-# Remote NAS share info (rsync structure)
-NAS="/NAS/Data/"
 # this week in numerical format
 THISWEEK=$(date +%V)
 # last week in numerical format
